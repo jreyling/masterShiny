@@ -1,21 +1,15 @@
 library(shiny)
 
 ui <- fluidPage(
-  selectInput('dataset', label = 'Dataset', choices = ls('package:datasets')),
-  verbatimTextOutput('summary'),
-  tableOutput('table')
+  textInput("name", "What's your name?"),
+  textOutput("greeting")
 )
 
-server <- function(input, output, session) {
-  output$summary <- renderPrint({
-    dataset <- get(input$dataset, 'package:datasets')
-    summary(dataset)
-  })
-  
-  output$table <- renderTable({
-    dataset <- get(input$dataset, 'package:datasets')
-    dataset
+server <- function(input, output){
+  output$greeting <- renderText({
+    paste0("Hello, ", input$name)
   })
 }
-
+  
+  
 shinyApp(ui, server)
