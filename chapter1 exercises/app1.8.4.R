@@ -11,12 +11,16 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
+  # create reactive expression
+  product <- reactive({
+    input$x * input$y
+    product
+  })
   output$product <- renderText({ 
-    answer <- input$x * input$y
-    answer
+    product
   })
   output$product_add <- renderText({
-    xyz <- (input$x * input$y) + input$z
+    xyz <- product + input$z
     xyz
   })
   
