@@ -1,0 +1,39 @@
+server1 <- function(input, output, session) {
+  c <- reactive(input$a + input$b)
+  e <- reactive(c() + input$d)
+  output$f <- renderText(e())
+}
+
+a> ---  >c> --- >e> --- >f
+b> /     d> /
+
+
+server2 <- function(input, output, session) {
+  x <- reactive(input$x1 + input$x2 + input$x3)
+  y <- reactive(input$y1 + input$y2)
+  output$z <- renderText(x() / y())
+}
+
+x1> ---- >x> ----- >z
+x2> //         /
+x3> /         /
+             /
+y1> --- >y> /
+y2> /
+
+server3 <- function(input, output, session) {
+  d <- reactive(c() ^ input$d)
+  a <- reactive(input$a * 10)
+  c <- reactive(b() / input$c) 
+  b <- reactive(a() + input$b)
+}
+
+a> ____ >a()> __ >b()> ___ >c()> ___ >d()>
+b> ___________/         /        /
+c> ____________________/        /
+d>_____________________________/
+
+
+
+.3
+This code will fail because var() and range() are named functions in r.
